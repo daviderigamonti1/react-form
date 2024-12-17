@@ -1,0 +1,39 @@
+body {
+    background-color: #E5E5E5;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+main {
+    padding: 20px;
+}
+
+footer {
+    height: 100px;
+    background-color: #333333;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    height: 400px;
+    width: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+
+h5 {
+    font-size: 1em;
+}
+
+p {
+    font-size: 0.8em;
+}
