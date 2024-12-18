@@ -1,9 +1,23 @@
-import { useState } from "react";
 import Card from "./Card.jsx";
 import posts from "../data/posts.js";
+import MyForm from "./MyForm.jsx";
+import { useState } from "react";
 function MainComponent() {
-    const postItem = [...posts];
-    const { firstName, setFirstName } = useState('');
+    const [postItem, setPostItem] = useState(posts);
+
+    function addPost(postData) {
+        const newPost = {
+            id: postData.id,
+            image: '',
+            title: postData.title,
+            content: postData.content
+        };
+
+        console.info(newPost);
+
+        setPostItem([...postItem, newPost]);
+    }
+
     return (
         <main className="container">
             <div className="row gy-4">
@@ -17,9 +31,8 @@ function MainComponent() {
                     </div>
                 ))}
             </div>
-            <form action="submit">
-                <input type="text" value={firstName} onChange={e => { setFirstName(e.target.value) }} />
-            </form>
+
+            <MyForm onAddPost={addPost} />
         </main>
     );
 }
