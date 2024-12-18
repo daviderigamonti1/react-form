@@ -8,7 +8,7 @@ function MainComponent() {
     function addPost(postData) {
         const newPost = {
             id: postData.id,
-            image: '',
+            image: '/img/image.jpg',
             title: postData.title,
             content: postData.content
         };
