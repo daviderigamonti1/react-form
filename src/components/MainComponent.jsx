@@ -5,16 +5,22 @@ import { useState } from "react";
 function MainComponent() {
     const [postItem, setPostItem] = useState(posts);
 
+    /**
+     * Aggiunge un post (aggiornando lo state) sul evento di onSubmit di MyForm.jsx
+     * @param {object} postData 
+     */
     function addPost(postData) {
         const newPost = {
             id: postData.id,
-            image: '/img/image.jpg',
+            image: postData.image,
             title: postData.title,
-            content: postData.content
+            content: postData.content,
+            author: postData.author,
+            date: postData.date,
+            checkbox: postData.checkbox,
         };
 
-        console.info(newPost);
-
+        // aggiorno lo stare di postItem
         setPostItem([...postItem, newPost]);
     }
 
@@ -27,6 +33,11 @@ function MainComponent() {
                             image={post.image}
                             title={post.title}
                             content={post.content}
+                            author={post.author}
+                            date={post.date}
+                            id={post.id}
+                            posts={postItem}
+                            setPosts={setPostItem}
                         />
                     </div>
                 ))}

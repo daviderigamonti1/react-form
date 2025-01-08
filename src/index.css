@@ -22,11 +22,22 @@ footer {
     align-items: center;
 }
 
+form {
+    max-width: 400px;
+}
+
 .card {
     height: 400px;
     width: 300px;
     border-radius: 10px;
     overflow: hidden;
+
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 

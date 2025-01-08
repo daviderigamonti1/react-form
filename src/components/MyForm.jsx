@@ -1,85 +1,110 @@
-import { useState } from "react";
-import posts from "../data/posts";
+import { useState, useEffect } from "react";
 
 const newPost = {
     title: '',
-    content: ''
+    author: "",
+    content: '',
+    image: "",
+    date: "",
+    checkbox: false,
 }
+
 function MyForm({ onAddPost }) {
+
     const [formData, setFormData] = useState(newPost);
 
+    useEffect(() => {
+        if (formData.checkbox) {
+            alert("Hai selezionato la checkbox per pubblicare l'articolo!");
+        }
+    }, [formData.checkbox]);
+
+    /**
+     * Gestisce l'evento submit della Form
+     * @param {object} e Event JS
+     */
     function handleSubmit(e) {
         e.preventDefault();
-
-        console.log(formData);
-
-        onAddPost(formData);
+        if (formData.checkbox) {
+            onAddPost(formData);
+        }
+        setFormData({
+            title: "",
+            author: "",
+            content: "",
+            image: "",
+            date: "",
+            checkbox: false,
+        })
     }
 
+    /**
+     * Gestisce l'evento change di un singolo input
+     * @param {object} e Event JS
+     */
     function handleInput(e) {
-        const value = e.target.value;
-
-        console.log({ ...formData, [e.target.name]: value, id: crypto.randomUUID() });
-
-        setFormData({ ...formData, [e.target.name]: value, id: crypto.randomUUID() })
-
+        const { name, type, value, checked } = e.target;
+        const inputValue = type == "checkbox" ? checked : value;
+        setFormData({ ...formData, [e.target.name]: inputValue, id: crypto.randomUUID() });
     }
 
     return (
         <section>
+            <h3 className="ps-3 pt-5">Aggiungi un tuo post</h3>
             <form className="p-4" onSubmit={handleSubmit}>
-                <label htmlFor="title" className="form-label">Title</label>
+                <label htmlFor="title" className="form-label">Titolo</label>
                 <input
                     type="text"
-                    className="form-control"
+                    className="form-control mb-3"
                     name="title"
                     onChange={handleInput}
                     value={formData.title}
+                    placeholder="Inserisci Il titolo"
                 />
-                <textarea className="form-control" name="content" onChange={handleInput} value={formData.content}></textarea>
+                <label htmlFor="author" className="form-label">Autore</label>
+                <input
+                    type="text"
+                    name="author"
+                    className="form-control mb-3"
+                    onChange={handleInput}
+                    value={formData.author}
+                    placeholder="Inserisci l'autore" />
+                <label htmlFor="content" className="form-label">Contenuto</label>
+                <textarea
+                    className="form-control mb-3"
+                    name="content"
+                    onChange={handleInput}
+                    value={formData.content}
+                    placeholder="Inserisci il contenuto">
+                </textarea>
+                <label htmlFor="image" className="form-label">Immagine</label>
+                <input
+                    type="text"
+                    name="image"
+                    className="form-control mb-3"
+                    onChange={handleInput}
+                    value={formData.image}
+                    placeholder="Inserisci l'immagine" />
+                <label htmlFor="date" className="form-label">Data pubblicazione</label>
+                <input
+                    type="text"
+                    name="date"
+                    className="form-control mb-3"
+                    onChange={handleInput}
+                    value={formData.date}
+                    placeholder="Inserisci data di pubblicazione" />
+                <div className="d-flex pt-3">
+                    <label htmlFor="checkbox" className="form-label">Vuoi aggiungere il post al blog?</label>
+                    <input
+                        type="checkbox"
+                        name="checkbox"
+                        className="ms-2 mb-1"
+                        onChange={handleInput}
+                        checked={formData.checkbox} />
+                </div>
                 <button className="btn btn-primary mt-4">Invia</button>
             </form>
-
-            <ul>{posts.map((post) => (
-                <li key={post.id} className="p-2">
-                    <div>{post.title}</div>
-                </li>
-            ))}
-            </ul>
         </section>
     );
 }
 export default MyForm;
-
-/*
-Creare un semplice form con un campo input per il titolo di un articolo del blog.
-Al submit del form, mostrare la lista degli articoli inseriti, con la possibilità di cancellare ciascun articolo utilizzando un'icona.
-*BONUS*
- Aggiungere più campi al form (ad es. lo stato di un articolo - draft, published - o l’autore)
-
-
-
- const [newPost, setNewPost] = useState(newPost);
-    const [postList, setPostList] = useState([]);
-
- function addPost(e) {
-        e.preventDefault();
-        setPostList({ ...newPost, [e.target.name]: e.target.value });
-    }
-        function deletePost(id) {
-        setPostList(posts.filter((post) => post.id !== id));
-    };
-
-    <button
-                        onClick={() => deletePost(post.id)} className="btn btn-danger ms-2">
-                        Elimina
-                    </button>
-    
-
-
-
-
-
-                    e.target.type === "checkbox" ? e.target.checked :
-*/
-
